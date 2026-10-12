@@ -1,0 +1,14 @@
+# pyproject.toml
+[build-system]
+requires = ["scikit-build-core>=0.10", "nanobind>=2.0"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "CovBIM"
+version = "0.1.0"
+dependencies = ["numpy", "scipy"]
+
+[tool.scikit-build]
+wheel.packages = ["python"]
+cmake.build-type = "Release"
+editable.mode = "redirect"
