@@ -6,7 +6,7 @@ build-backend = "scikit_build_core.build"
 [project]
 name = "CovBIM"
 version = "0.1.0"
-dependencies = ["numpy", "scipy"]
+dependencies = ["numpy", "scipy", "pytest"]
 
 [tool.scikit-build]
 wheel.packages = ["python"]
