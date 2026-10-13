@@ -9,6 +9,6 @@ version = "0.1.0"
 dependencies = ["numpy", "scipy", "pytest"]
 
 [tool.scikit-build]
-wheel.packages = ["python"]
+wheel.packages = ["python/CovBIM"]
 cmake.build-type = "Release"
 editable.mode = "redirect"
