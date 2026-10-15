@@ -41,11 +41,10 @@ class TylerResult:
     converged: np.ndarray     # (N,) bool
 
 
-def tyler_covariances(X, k: int = 30, kernel: str = "triweight", joint_location: bool = True,
+def tyler_covariances(X, k: int = 30, kernel: str = "dumb", joint_location: bool = True,
                       tol: float = 1e-6, max_iter: int = 50, ridge: float = 1e-10) -> TylerResult:
     X = _as_points(X)
-    P, mu, radii, iters, conv = _core.tyler_covariances(
-        X, k, KERNELS[kernel], joint_location, tol, max_iter, ridge)
+    P, mu, radii, iters, conv = _core.tyler_covariances(X, k, KERNELS[kernel], joint_location, tol, max_iter, ridge)
     n = X.shape[1]
     return TylerResult(P.reshape(len(X), n, n), mu, radii, iters, conv.astype(bool))
 
@@ -58,7 +57,7 @@ class CovarianceConfig:
     kernel: str = "dumb"        # "triweight" | "bump" | "dumb"
     joint_location: bool = True
     tol: float = 1e-6
-    max_iter: int = 50
+    max_iter: int = 500
     ridge: float = 1e-10
 
 

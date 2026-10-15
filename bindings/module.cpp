@@ -1,6 +1,7 @@
 // bindings/module.cpp
 #include <nanobind/nanobind.h>
 #include <nanobind/eigen/dense.h>
+#include <nanobind/stl/tuple.h>
 // #include <geodsd/covariance.hpp>
 // #include <test.hpp>
 
