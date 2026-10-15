@@ -4,11 +4,14 @@
 
 #include <knn.hpp>
 
-namespace {
+namespace TYLER {
 
+/// Use Row major from KNN
+using RowMatrixXd = KNN::RowMatrixXd;
+using RowMatrixXi = KNN::RowMatrixXi;
 /// Row-major dense matrices: one point per row, same memory layout as a C-contiguous numpy array.
-using RowMatrixXd = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
-using RowMatrixXi = Eigen::Matrix<Eigen::Index, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+// using RowMatrixXd = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+// using RowMatrixXi = Eigen::Matrix<Eigen::Index, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
 
 /// Smooth, compactly supported kernels K(t) on t = ||x_j - x|| / r, with K(0) = 1 and K(t) = 0 for t >= 1.
 enum class Kernel {

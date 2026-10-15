@@ -4,7 +4,7 @@
 #include <cmath>
 #include <stdexcept>
 
-namespace {
+namespace TYLER{
 
 double kernel_weight(Kernel kernel, double t) {
     t = std::abs(t);

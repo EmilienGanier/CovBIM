@@ -8,6 +8,13 @@ name = "CovBIM"
 version = "0.1.0"
 dependencies = ["numpy", "scipy", "pytest"]
 
+[project.optional-dependencies]
+io        = ["trimesh"]                 # mesh loading
+plot      = ["matplotlib", "polyscope"]
+baselines = ["scikit-learn"]            # MCD baseline
+config    = ["pyyaml"]                  # YAML experiment configs
+all       = ["trimesh", "matplotlib", "polyscope", "scikit-learn", "pyyaml"]
+
 [tool.scikit-build]
 wheel.packages = ["python/CovBIM"]
 cmake.build-type = "Release"

@@ -19,6 +19,7 @@ find_package(OpenMP)
 
 file(GLOB CORE_SRC cpp/src/*.cpp)
 add_library(geodsd_core STATIC ${CORE_SRC})
+set_target_properties(geodsd_core PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_include_directories(geodsd_core PUBLIC cpp/include)
 # Link against libigl
 target_link_libraries(geodsd_core PUBLIC igl::core)
