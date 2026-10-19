@@ -70,6 +70,43 @@ def plot_distance_isolevels(points, distances, source, levels, width, ncols=4, *
         ax.set_visible(False)
     return fig
 
+def plot_path(points, path, source=None, target=None, **kwargs):
+    """Scatter plot of a path on a 2D or 3D point cloud.
+
+    `path` is a sequence of indices into `points`.
+    All points that are not part of the path are drawn in light gray.
+    All points in the path are colored by their index in the path to the source (or target if source is None).
+    """
+    import matplotlib.pyplot as plt
+
+    pts = np.asarray(points, dtype=float)
+    path = np.asarray(path, dtype=int)
+    dim = pts.shape[1]
+    if dim not in (2, 3):
+        raise ValueError("plot_path supports 2D or 3D points: project first")
+    ax = plt.figure(figsize=(5, 5)).add_subplot(projection="3d" if dim == 3 else None)
+
+    all_idx = np.arange(len(pts))
+    outside = ~np.isin(all_idx, path)
+    if outside.any():
+        ax.scatter(*pts[outside].T, s=4.0, c="lightgray", alpha=0.25, linewidths=0)
+    if len(path) > 0:
+        sc = ax.scatter(*pts[path].T, s=20.0, c=np.arange(len(path)), cmap="plasma", linewidths=0)
+        ax.plot(*pts[path].T, c="k", alpha=0.5, lw=1.0)
+        ax.figure.colorbar(sc, ax=ax, shrink=0.7)
+
+    if source is not None:
+        ax.scatter(*pts[source:source + 1].T, s=60, c="limegreen", edgecolors="k", zorder=10)
+    if target is not None:
+        ax.scatter(*pts[target:target + 1].T, s=60, c="orangered", edgecolors="k", zorder=10)
+
+    if dim == 2:
+        ax.set_aspect("equal")
+    else:
+        ax.set_box_aspect(np.maximum(np.ptp(pts, axis=0), 1e-9))
+    ax.set_axis_off()
+    return ax
+    
 
 def show_polyscope(points, **scalars):
     """Interactive view: show_polyscope(X, distance=d, det=gm.determinants). Requires polyscope."""

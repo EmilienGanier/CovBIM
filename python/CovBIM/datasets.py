@@ -150,7 +150,7 @@ def crossing_circles(n_points, rng, n_lines=2, radius=1.0):
     counts[: n_points % n_circles] += 1
     parts, labels = [], []
     for i, c in enumerate(counts):
-        parts.append(sample_sphere(c, rng, radius=radius, center=(0.0 + (i - 0.5)*radius, 0.0)))
+        parts.append(sample_sphere(c, rng, radius=radius, center=(0.0 + (i - 0.5) * np.sqrt(2.0) * radius, 0.0)))
         labels.append(np.full(c, i))
     return PointCloud(np.vstack(parts), labels=np.concatenate(labels), name="crossing_circles")
 
