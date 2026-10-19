@@ -44,7 +44,8 @@ class PointCloud:
 # ----------------------------------------------------------------------------- sampling helpers
 
 def sample_sphere(n, rng, radius=1.0, center=(0.0, 0.0, 0.0)):
-    v = rng.normal(size=(n, 3))
+    dim = len(center)
+    v = rng.normal(size=(n, dim))
     v /= np.linalg.norm(v, axis=1, keepdims=True)
     return radius * v + np.asarray(center, dtype=float)
 
@@ -137,6 +138,21 @@ def crossing_lines(n_points, rng, n_lines=2, length=2.0):
         parts.append(sample_segment(c, rng, -d, d))
         labels.append(np.full(c, i))
     return PointCloud(np.vstack(parts), labels=np.concatenate(labels), name="crossing_lines")
+
+
+@register("crossing_circles")
+def crossing_circles(n_points, rng, n_lines=2, radius=1.0):
+    """`n_circles` circles in 2D crossing at the origin. Label i = i-th circle."""
+    if n_lines != 2:
+        raise ValueError("crossing_circles only supports n_lines = 2")
+    n_circles = 2
+    counts = np.full(n_circles, n_points // n_circles)
+    counts[: n_points % n_circles] += 1
+    parts, labels = [], []
+    for i, c in enumerate(counts):
+        parts.append(sample_sphere(c, rng, radius=radius, center=(0.0 + (i - 0.5)*radius, 0.0)))
+        labels.append(np.full(c, i))
+    return PointCloud(np.vstack(parts), labels=np.concatenate(labels), name="crossing_circles")
 
 
 # ----------------------------------------------------------------------------- noise
